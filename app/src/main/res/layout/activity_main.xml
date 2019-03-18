@@ -20,6 +20,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="get IP"/>
+    <Button
+        android:id="@+id/buttonNetworkInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="get NetworkInfo"/>
 
     <TextView
         android:id="@+id/textViewInfo"

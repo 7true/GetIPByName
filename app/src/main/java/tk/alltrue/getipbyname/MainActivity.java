@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mHostEditText;
     private TextView mInfoTextView;
     private Button mIpButton;
+    private Button mNetworkInfoButton;
     private ListView mListView;
 
     @Override
@@ -34,13 +35,34 @@ public class MainActivity extends AppCompatActivity {
         mHostEditText = findViewById(R.id.editTextHost);
         mInfoTextView = findViewById(R.id.textViewInfo);
         mListView = findViewById(R.id.listViewResult);
-        mIpButton = (Button) findViewById(R.id.buttonIP);
+        mIpButton = findViewById(R.id.buttonIP);
+        mNetworkInfoButton = findViewById(R.id.buttonNetworkInfo);
 
         mIpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mInfoTextView.setText("Waiting...");
                 new GetIPTask().execute();
+            }
+        });
+
+        mNetworkInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
+
+                List<String> listNetworkInfo = new ArrayList<String>();
+                for (int i = 0; i < networkInfo.length; i++) {
+                    listNetworkInfo.add(networkInfo[i].toString());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                        MainActivity.this, android.R.layout.simple_list_item_1,
+                        listNetworkInfo);
+
+                mListView.setAdapter(adapter);
+
             }
         });
     }
