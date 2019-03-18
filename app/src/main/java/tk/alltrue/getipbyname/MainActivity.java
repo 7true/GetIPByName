@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
             if (error) {
                 mInfoTextView.setText("Error: \n" + error_info);
             } else {
+                if (!isOnline()) {
+                    mInfoTextView.setText("You are offline");
+                    return;
+                }
                 mInfoTextView.setText("Finished, ok");
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -83,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "You are offline, please turn on your network", Toast.LENGTH_SHORT).show();
                     }
                 });
+                return;
             }
             try {
                 inetAddress = InetAddress.getAllByName(host);
