@@ -1,5 +1,9 @@
 package tk.alltrue.getipbyname;
 
+import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -30,14 +35,16 @@ public class MainActivity extends AppCompatActivity {
         mInfoTextView = findViewById(R.id.textViewInfo);
         mListView = findViewById(R.id.listViewResult);
         mIpButton = (Button) findViewById(R.id.buttonIP);
+
         mIpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mInfoTextView.setText("Подождите...");
+                mInfoTextView.setText("Waiting...");
                 new GetIPTask().execute();
             }
         });
     }
+
     private class GetIPTask extends AsyncTask<Void, Void, Void> {
         boolean error = false;
         String error_info = "";
@@ -70,6 +77,13 @@ public class MainActivity extends AppCompatActivity {
         private void getIP() {
             String host = mHostEditText.getText().toString();
 
+            if (!isOnline()) {
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(MainActivity.this, "You are offline, please turn on your network", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
             try {
                 inetAddress = InetAddress.getAllByName(host);
 
@@ -83,6 +97,16 @@ public class MainActivity extends AppCompatActivity {
                 error = true;
                 error_info = e.toString();
             }
+        }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
