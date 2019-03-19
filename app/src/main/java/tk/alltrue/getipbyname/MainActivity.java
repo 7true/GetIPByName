@@ -1,10 +1,15 @@
 package tk.alltrue.getipbyname;
 
 import android.app.Activity;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private Button mIpButton;
     private Button mNetworkInfoButton;
     private ListView mListView;
-
+    Fragment fragment;
+    private FragmentActivity myContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
         mIpButton = findViewById(R.id.buttonIP);
         mNetworkInfoButton = findViewById(R.id.buttonNetworkInfo);
 
+        FragmentManager fragmentManager = myContext.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        NetWorkInfoFragment myFragment = new NetWorkInfoFragment();
+        fragmentTransaction.add(R.id.myfragment, myFragment);
+        fragmentTransaction.commit();
         mIpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
         mNetworkInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Fragment newFragment;
+                newFragment = new NetWorkInfoFragment();
                 ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
 
