@@ -1,5 +1,6 @@
 package tk.alltrue.getipbyname;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,31 +28,40 @@ public class IPbyName extends Fragment {
     private TextView mInfoTextView;
     private ListView mListView;
     private EditText mHostEditText;
+    private View ipView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View ipView = inflater.inflate(R.layout.fragmentip, container, false);
+        ipView = inflater.inflate(R.layout.fragmentip, container, false);
         //View mainView = inflater.inflate(R.layout.activity_main, container, false);
-        //mListView = (ListView) ipView.findViewById(R.id.listViewNetworkInfo);
+        mListView = (ListView) ipView.findViewById(R.id.listViewIP);
 
         //EditText mHostEditText = (EditText)  getActivity().findViewById(R.id.editTextHost);
 
 
-        Button mBtst = (Button) ipView.findViewById(R.id.buttonIPtest);
-        mBtst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextView mTextView =  ((TextView) (getActivity()).findViewById(R.id.textViewInfo));
-                mTextView.setText("Waiting...");
-            }
-        });
-      // mTextView.setText("Waiting...");
-       //new GetIPTask().execute();
+//        Button mBtst = (Button) ipView.findViewById(R.id.buttonIPtest);
+//        mBtst.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+        // mTextView.setText("Waiting...");
+        //new GetIPTask().execute();
         return ipView;
     }
 
     @Override
+    public void onActivityCreated(Bundle context) {
+        super.onActivityCreated(context);
+        Activity a;
+        a = getActivity();
+        mInfoTextView = ((TextView) a.findViewById(R.id.textViewInfo));
+        mInfoTextView.setText("Waiting...");
+        mHostEditText = (EditText)  a.findViewById(R.id.editTextHost);
+        new GetIPTask().execute();
+}
 
-    /*
+
     private class GetIPTask extends AsyncTask<Void, Void, Void> {
         boolean error = false;
         String error_info = "";
@@ -120,5 +130,5 @@ public class IPbyName extends Fragment {
         } else {
             return false;
         }
-    }*/
+    }
 }
