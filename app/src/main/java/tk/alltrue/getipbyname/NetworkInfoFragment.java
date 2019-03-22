@@ -20,7 +20,7 @@ public class NetworkInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View networkFragmentView = inflater.inflate(R.layout.fragmentnetworkinfo, container, false);
-        final ListView mListView = (ListView) networkFragmentView.findViewById(R.id.listViewNetworkInfo);
+        ListView mListView = (ListView) networkFragmentView.findViewById(R.id.listViewNetworkInfo);
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();

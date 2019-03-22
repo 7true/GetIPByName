@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public TextView mInfoTextView;
     public Button mIpButton;
     public Button mNetworkInfoButton;
+    public Button mTrafficStats;
     public ListView mListView;
     Fragment fragment;
 
@@ -42,13 +43,8 @@ public class MainActivity extends AppCompatActivity {
         mListView = findViewById(R.id.listViewIP);
         mIpButton = findViewById(R.id.buttonIP);
         mNetworkInfoButton = findViewById(R.id.buttonNetworkInfo);
+        mTrafficStats = findViewById(R.id.buttonTrafficStats);
 
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        NetWorkInfoFragment myFragment = (NetWorkInfoFragment) fragmentManager
-//                .findFragmentById(R.id.fragmentNetInfo);
-//        fragmentTransaction.add(R.id.content, myFragment,"myFragment");
-//        fragmentTransaction.commit();
 
         mIpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,19 +69,19 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.fragment_place, fr);
                 fragmentTransaction.commit();
 
-//                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//                NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
-//
-//                List<String> listNetworkInfo = new ArrayList<String>();
-//                for (int i = 0; i < networkInfo.length; i++) {
-//                    listNetworkInfo.add(networkInfo[i].toString());
-//                }
-//
-//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-//                        MainActivity.this, android.R.layout.simple_list_item_1,
-//                        listNetworkInfo);
-//                mListView.setAdapter(adapter);
 
+            }
+        });
+
+        mTrafficStats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fr;
+                fr = new TrafficStatsFragments();
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_place, fr);
+                fragmentTransaction.commit();
             }
         });
     }
