@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,30 +24,17 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class IPbyName extends Fragment {
+public class IPbyNameFragment extends Fragment {
     private TextView mInfoTextView;
     private ListView mListView;
     private EditText mHostEditText;
     private View ipView;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ipView = inflater.inflate(R.layout.fragmentip, container, false);
-        //View mainView = inflater.inflate(R.layout.activity_main, container, false);
         mListView = (ListView) ipView.findViewById(R.id.listViewIP);
-
-        //EditText mHostEditText = (EditText)  getActivity().findViewById(R.id.editTextHost);
-
-
-//        Button mBtst = (Button) ipView.findViewById(R.id.buttonIPtest);
-//        mBtst.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-        // mTextView.setText("Waiting...");
-        //new GetIPTask().execute();
         return ipView;
     }
 
@@ -123,12 +111,9 @@ public class IPbyName extends Fragment {
     }
 
     public boolean isOnline() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) Objects.requireNonNull(getActivity()).getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
-        } else {
-            return false;
-        }
+        return networkInfo != null && networkInfo.isConnected();
     }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical">
@@ -9,7 +8,9 @@ android:orientation="vertical">
     android:id="@+id/editTextHost"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="alltrue.tk" />
+    android:inputType="text"
+    android:text="@string/defaultsite"
+    />
 
 <TextView
     android:id="@+id/textViewInfo"
@@ -25,7 +26,7 @@ android:orientation="vertical">
         android:id="@+id/buttonIP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="get IP" />
+        android:text="@string/ipbutton" />
 
     <Button
         android:id="@+id/buttonNetworkInfo"
@@ -38,11 +39,17 @@ android:orientation="vertical">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="getTraffStat" />
+
+    <Button
+        android:id="@+id/buttonInt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ints" />
 </LinearLayout>
 
 <fragment
     android:id="@+id/fragment_place"
-    android:name="tk.alltrue.getipbyname.IPbyName"
+    android:name="tk.alltrue.getipbyname.IPbyNameFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 </LinearLayout>
